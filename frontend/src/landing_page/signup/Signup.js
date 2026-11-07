@@ -149,7 +149,7 @@ function Signup() {
       if (response.data.success) {
         // Redirect to deployed Dashboard
         window.location.href =
-          "YOUR_DASHBOARD_RENDER_URL";
+          "https://stock-trading-dashbord.onrender.com";
       } else {
         setMessage(response.data.message || "Signup failed");
       }
