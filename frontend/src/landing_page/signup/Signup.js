@@ -136,29 +136,32 @@ function Signup() {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setMessage("Creating account...");
 
-    try {
-      const response = await axios.post(
-        "https://stock-trading-oe4b.onrender.com/signup",
-        formData,
-        { withCredentials: true }
-      );
+  try {
+    const response = await axios.post(
+      "https://stock-trading-backend-l2up.onrender.com/signup",
+      formData,
+      { withCredentials: true }
+    );
 
-      if (response.data.success) {
-        // Redirect to deployed Dashboard
-        window.location.href =
-          "https://stock-trading-dashbord.onrender.com";
-      } else {
-        setMessage(response.data.message || "Signup failed");
-      }
-    } catch (error) {
-      setMessage(
-        error.response?.data?.message || "Signup failed"
-      );
+    if (response.data.success) {
+      window.location.href =
+        "https://stock-trading-dashbord.onrender.com";
+    } else {
+      setMessage(response.data.message || "Signup failed");
     }
-  };
+  } catch (error) {
+    console.error("Signup error:", error);
+
+    setMessage(
+      error.response?.data?.message ||
+      "Signup failed. Please check backend connection."
+    );
+  }
+};
 
   return (
     <div className="row mt-3">
