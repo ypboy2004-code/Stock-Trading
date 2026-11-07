@@ -29,6 +29,7 @@ app.use(
     origin: [
       "http://localhost:3000",
       "http://localhost:3001",
+      "https://stock-trading-frontend-1.onrender.com",
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
