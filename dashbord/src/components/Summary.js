@@ -8,7 +8,7 @@ const Summary = () => {
     const fetchUser = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3002/me",
+         "https://stock-trading-backend-l2up.onrender.com/me",
           {
             method: "GET",
             credentials: "include",
