@@ -40,33 +40,27 @@ const Menu = () => {
   }, []);
 
   // Logout function
-  const handleLogout = async () => {
-    try {
-      const response = await fetch(
-        "http://localhost:3002/logout",
-        {
-          method: "POST",
-          credentials: "include",
-        }
+const handleLogout = async () => {
+  try {
+    const response = await fetch(
+      "https://stock-trading-backend-l2up.onrender.com/logout",
+      {
+        method: "POST",
+        credentials: "include",
+      }
+    );
+
+    const result = await response.json();
+
+    if (response.ok && result.success) {
+      window.location.replace(
+        "https://stock-trading-frontend-1.onrender.com"
       );
-
-      if (!response.ok) {
-        throw new Error("Logout failed");
-      }
-
-      const result = await response.json();
-
-      if (result.success) {
-        window.location.href = "http://localhost:3001";
-      } else {
-        throw new Error("Logout unsuccessful");
-      }
-
-    } catch (error) {
-      console.error("Logout error:", error);
-      alert("Unable to logout. Please try again.");
     }
-  };
+  } catch (error) {
+    console.error("Logout Error:", error);
+  }
+};
 
   const menuClass = "menu";
   const activeMenuClass = "menu selected";
