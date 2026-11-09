@@ -7,7 +7,7 @@ function Footer() {
       <div className="row mt-5">
         <div className="col">
           <img
-            src="Media/images/logo.svg"
+            src="Media/Images/logo.svg"
             alt="Logo"
             style={{ width: "50%" }}
           />

@@ -17,7 +17,7 @@ function Stats(){
                     </div>
                 
                 <div className="col-6">
-                    <img src="Media/images/ecosystem.png" alt="Stats" style={{width:"90%"}} />
+                    <img src="Media/Images/ecosystem.png" alt="Stats" style={{width:"90%"}} />
                     <div className="text-center">
                         <a href="" className="mx-5" style={{textDecoration:"none"}}>Explore our products <i class="fa-solid fa-arrow-right-long"></i></a>
                         <a href="" style={{textDecoration:"none"}}>Try Kit demo<i class="fa-solid fa-arrow-right-long"></i> </a>
