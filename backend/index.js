@@ -23,20 +23,15 @@ const uri = process.env.MONGO_URL;
 
 const app = express();
 
-const allowedOrigins = [
-  "http://localhost:3000",
-  "http://localhost:3001",
-  "https://stock-trading-frontend-1.onrender.com",
-  "https://stock-trading-dashbord.onrender.com",
-];
 
-app.use(
-  cors({
-    origin: allowedOrigins,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: [
+    "https://stock-trading-frontend-1.onrender.com",
+    "https://stock-trading-dashbord.onrender.com",
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  credentials: true,
+}));
 app.use(cookieParser());
 
 app.use(bodyParser.json());

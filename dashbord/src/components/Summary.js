@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 const Summary = () => {
   const [username, setUsername] = useState("");
 
-  useEffect(() => {
+  useEffect(async () => {
     const fetchUser = async () => {
       try {
         const response = await fetch(
@@ -28,6 +28,13 @@ const Summary = () => {
       } catch (error) {
         console.error("User fetch error:", error);
       }
+ const data = await response.json();
+
+console.log("User API Response:", data);
+
+if (data.success && data.user) {
+  setUsername(data.user.username);
+}
     };
 
     fetchUser();

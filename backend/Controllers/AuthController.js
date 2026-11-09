@@ -2,11 +2,19 @@
 const User = require("../model/UserModel");
 const { createSecretToken } = require("../util/ScretToken");
 
+const isProduction = process.env.NODE_ENV === "production";
+
+const cookieOptions = {
+  httpOnly: true,
+  secure: isProduction,
+  sameSite: isProduction ? "none" : "lax",
+  path: "/",
+};
+
 module.exports.Signup = async (req, res) => {
   try {
     const { email, password, username } = req.body;
 
-    // Check existing user
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
@@ -16,22 +24,15 @@ module.exports.Signup = async (req, res) => {
       });
     }
 
-    // Create new user
     const user = await User.create({
       email,
       password,
       username,
     });
 
-    // Generate JWT token
     const token = createSecretToken(user._id);
 
-    // Set cookie
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-    });
+    res.cookie("token", token, cookieOptions);
 
     return res.status(201).json({
       message: "User signed up successfully",
@@ -51,15 +52,10 @@ module.exports.Signup = async (req, res) => {
     });
   }
 };
- 
+
 module.exports.Logout = async (req, res) => {
   try {
-    res.clearCookie("token", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-    });
+    res.clearCookie("token", cookieOptions);
 
     return res.status(200).json({
       success: true,
@@ -74,8 +70,16 @@ module.exports.Logout = async (req, res) => {
     });
   }
 };
+
 module.exports.GetMe = async (req, res) => {
   try {
+    if (!req.user) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
+
     return res.status(200).json({
       success: true,
       user: {
@@ -86,6 +90,7 @@ module.exports.GetMe = async (req, res) => {
     });
   } catch (error) {
     console.error("GetMe error:", error);
+
     return res.status(500).json({
       success: false,
       message: "Unable to fetch user details",
